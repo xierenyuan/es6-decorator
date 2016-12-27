@@ -18,7 +18,6 @@ export function moduleFactory(Module, Options) {
     //依赖的模块
     const requireModules = Options.require || [];
 
-
     //获取原型上的 方法进行注册
     const app = angular.module(Options.name, requireModules);
 

@@ -7,14 +7,22 @@ import { Bootstrap, NgModule, Inject } from './lib';
     require: [uiRouter]
 })
 class AppModule {
-
-    @Inject('$stateProvider')
-    config($stateProvider) {
+    @Inject('$stateProvider', '$urlRouterProvider')
+    config($stateProvider, $urlRouterProvider) {
         console.log('config init', $stateProvider);
+        $stateProvider.state('app', {
+            url: '/app',
+            template: `<h1>233</h1>`
+        });
+        $urlRouterProvider.otherwise("/app");
     }
 
-    run() {
+    @Inject('$timeout')
+    run($timeout) {
         console.log('run init');
+        $timeout(() => {
+            console.log('run $timeout 100ms 后执行');
+        }, 100);
     }
 }
 

@@ -1,5 +1,6 @@
 import angular from 'angular';
 import { moduleFactory } from './module';
+import { InjectFactory } from './inject';
 
 /**
  * 
@@ -35,14 +36,16 @@ export function Bootstrap(name) {
 /**
  * 
  * 实现 因为压缩导致 依赖注入 的模块报错的问题
+ * 因为 严格模式下 Function 获取 arguments 会报错的问题 取消 不传参数的限制 现在的需要传参数
  * @export
- * @param {any} inject 需要依赖注入的模块
+ * @param {any} inject 需要依赖注入的模块 
  */
 export function Inject(...inject) {
+    const isFunctionNoParam = arguments.length === 0;
+    if (isFunctionNoParam) {
+        throw new Error('Inject 必须传入需要依赖注入的模块');
+    }
     return function(target, value, descriptor) {
-        if (angular.isArray(inject)) {
-            descriptor.value.$inject = inject;
-        }
-        return descriptor;
+        return InjectFactory(descriptor, inject);
     }
 }

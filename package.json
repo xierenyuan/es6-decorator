@@ -22,14 +22,15 @@
   },
   "homepage": "https://github.com/xierenyuan/es6-decorator#readme",
   "dependencies": {
-    "@types/angular": "^1.5.22",
-    "@types/angular-ui-router": "^1.1.36",
     "angular": "^1.6.1",
     "angular-ui-router": "^0.3.2",
     "webpack": "^1.14.0",
     "webpack-dev-server": "^1.16.2"
   },
   "devDependencies": {
+    "@types/angular": "^1.5.22",
+    "@types/angular-ui-router": "^1.1.36",
+    "@types/node": "^6.0.54",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
     "babel-plugin-component": "^0.6.0",
