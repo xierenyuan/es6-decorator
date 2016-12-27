@@ -1,5 +1,13 @@
 {
     "presets": ["es2015", "stage-2"],
-    "plugins": ["transform-runtime", "transform-decorators-legacy"],
+    "plugins": [
+        ["transform-runtime", {
+            "helpers": false,
+            "polyfill": false,
+            "regenerator": true
+        }],
+        "transform-decorators-legacy",
+        "transform-es2015-destructuring"
+    ],
     "comments": false
 }

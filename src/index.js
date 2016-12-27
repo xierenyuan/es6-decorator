@@ -1,22 +1,16 @@
-function isClass(value) {
-    return function(target, name, descriptor) {
-        console.log(value);
-        console.log(target);
-        console.log(name);
-        console.log(descriptor);
+import { Bootstrap, NgModule } from './lib';
+
+@NgModule({
+    name: 'rrc'
+})
+class AppModule {
+    config() {
+        console.log('config init');
+    }
+
+    run() {
+        console.log('run init');
     }
 }
 
-@isClass({
-    isObject: true,
-    select: 'item'
-})
-class A {
-    constructor() {
-        console.log('233');
-    }
-};
-
-new A();
-
-export default A;
+Bootstrap(AppModule);
