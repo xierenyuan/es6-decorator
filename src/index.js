@@ -1,11 +1,16 @@
-import { Bootstrap, NgModule } from './lib';
+import 'angular';
+import uiRouter from 'angular-ui-router';
+import { Bootstrap, NgModule, Inject } from './lib';
 
 @NgModule({
-    name: 'rrc'
+    name: 'rrc',
+    require: [uiRouter]
 })
 class AppModule {
-    config() {
-        console.log('config init');
+
+    @Inject('$stateProvider')
+    config($stateProvider) {
+        console.log('config init', $stateProvider);
     }
 
     run() {

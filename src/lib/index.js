@@ -31,3 +31,18 @@ export function Bootstrap(name) {
         angular.bootstrap(doc, [name]);
     });
 }
+
+/**
+ * 
+ * 实现 因为压缩导致 依赖注入 的模块报错的问题
+ * @export
+ * @param {any} inject 需要依赖注入的模块
+ */
+export function Inject(...inject) {
+    return function(target, value, descriptor) {
+        if (angular.isArray(inject)) {
+            descriptor.value.$inject = inject;
+        }
+        return descriptor;
+    }
+}

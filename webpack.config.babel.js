@@ -15,5 +15,13 @@ export default {
             loader: 'babel'
         }]
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    // 测试 inject 压缩
+    // plugins: [
+    //     new webpack.optimize.UglifyJsPlugin({
+    //         compress: {
+    //             warnings: false
+    //         }
+    //     })
+    // ]
 }
