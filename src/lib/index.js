@@ -1,6 +1,6 @@
 import angular from 'angular';
 import { moduleFactory } from './module';
-import { InjectFactory } from './inject';
+import { InjectFactory, extractArgs } from './inject';
 
 /**
  * 
@@ -33,19 +33,48 @@ export function Bootstrap(name) {
     });
 }
 
+
+/**
+ * 
+ * 依赖加载 模板
+ * @export
+ * @param {any} templateUrl 模板地址
+ */
+export function RequireTemplate(templateUrl) {
+    return function(target, value, descriptor) {
+        console.log(templateUrl);
+    }
+}
+
 /**
  * 
  * 实现 因为压缩导致 依赖注入 的模块报错的问题
- * 因为 严格模式下 Function 获取 arguments 会报错的问题 取消 不传参数的限制 现在的需要传参数
  * @export
- * @param {any} inject 需要依赖注入的模块 
+ * @param {any} inject 在传参数的情况下是  指需要依赖注入的模块 不传参数的情况下 是指 当前 target
+ * 很尴尬。。。默认参数的实现压缩还是会报错 先留着吧  -.- 这个还是的做代码编译器 来实现比较好一点...
  */
-export function Inject(...inject) {
-    const isFunctionNoParam = arguments.length === 0;
-    if (isFunctionNoParam) {
-        throw new Error('Inject 必须传入需要依赖注入的模块');
+export function Inject(inject, val, desc) {
+    // 当参数为1时说明 是传入依赖注入的方式 当默认不传参数时 说明 是直接获取inject 处理
+    const isFunctionNoParam = arguments.length === 1;
+    if (!isFunctionNoParam) {
+        let args = extractArgs(desc.value);
+        return InjectFactory(desc, args);
     }
     return function(target, value, descriptor) {
         return InjectFactory(descriptor, inject);
+    }
+}
+
+/**
+ * 
+ * 解决因为 压缩 引起的依赖注入问题
+ * @export
+ * @param {any} options 需要依赖注入的参数
+ * @returns
+ */
+export function Injector(...options) {
+    return function(target, value, descriptor) {
+        descriptor.value.$inject = options;
+        return descriptor;
     }
 }

@@ -4,6 +4,8 @@
 es6 装饰器学习
 > -。- 好奇 宝宝 又开始学习新东西呢
 
+实现装饰器 完成复古版本 ng1 + es6 开发
+
 > 参考 [javascript-decorators](https://github.com/wycats/javascript-decorators/blob/master/README.md)
 > [transform-decorators](https://babeljs.io/docs/plugins/transform-decorators/)
 
@@ -15,7 +17,7 @@ es6 装饰器学习
 
 npm install
 
-npm start
+npm run  demo
 ```
 
 ## 关于发现的一些写法问题 描述

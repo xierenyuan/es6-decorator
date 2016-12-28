@@ -1,13 +1,14 @@
 import webpack from 'webpack';
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 /**
  * Webpack Constants
  */
 const ENV = (process.env.NODE_ENV || 'development');
-const ROOT = path.resolve(__dirname, 'src');
+const ROOT = path.resolve(__dirname, '../examples');
 const DESTINATION = path.resolve(__dirname, 'dist');
-const NODE_MODULES = path.join(__dirname, 'node_modules');
+const NODE_MODULES = path.join(__dirname, '../node_modules');
 
 // loader 
 let Loaders = [{
@@ -16,7 +17,7 @@ let Loaders = [{
     },
     {
         test: /\.js$/,
-        loader: 'babel'
+        loader: 'ng-annotate?add=true!babel'
     }
 ];
 
@@ -36,6 +37,11 @@ let webpackConfigPlugins = [
     new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest',
         chunks: ['vendor']
+    }),
+    new HtmlWebpackPlugin({
+        filename: 'index.html',
+        template: path.resolve(ROOT, 'index.html'),
+        inject: true
     })
 ];
 
@@ -50,14 +56,22 @@ if (ENV === 'production') {
 
 let config = {
     entry: {
-        app: path.resolve(ROOT, 'index.js')
+        app: path.resolve(ROOT, 'app/index.js')
     },
     output: {
         path: DESTINATION,
-        filename: 'build.js'
+        filename: '[name].js',
+        chunkFilename: '[id].js'
     },
     module: {
         loaders: Loaders
+    },
+    resolve: {
+        extensions: ['', '.js'],
+        fallback: [NODE_MODULES],
+        alias: {
+            'src': path.resolve(__dirname, '../src')
+        }
     },
     devtool: 'source-map',
     plugins: webpackConfigPlugins,
